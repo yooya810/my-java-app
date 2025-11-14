@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<title>新規登録
+	</title>
+	</head>
+<body>
+<h2>コーピング新規登録</h2>
+    <form th:action="@{/coping/save}" method="post" th:object="${copingForm}">
+		<input type="hidden" th:field="*{user_id}">
+		<input type="hidden" th:field="*{coping_id}">
+		<input type="hidden" th:field="*{created_at}">
+        <label>タイトル: </label>
+			<input type="text" th:field="*{title}" required maxlength="20"/>
+	        <span th:errors="*{title}" class="error">
+				エラーがあれば表示
+			</span>
+			<br>
+        <label style="vertical-align: top;">説明: </label>
+			<textarea th:field="*{description}" rows="4" cols="25" maxlength="50"></textarea>
+	        <span th:errors="*{description}" class="error">
+				エラーがあれば表示
+			</span>
+			<br>
+        <label>カテゴリ: </label>
+			<input type="text" th:field="*{category}" maxlength="10"/>
+	        <span th:errors="*{category}" class="error">
+				エラーがあれば表示
+			</span>
+			<br>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>

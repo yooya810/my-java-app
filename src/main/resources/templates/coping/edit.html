@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>コーピング編集</title>
+</head>
+<body>
+<h2>コーピング編集</h2>
+<p>[[${theCoping.title}]]</p>
+
+<form th:action="@{/coping/update}" method="post" th:object="${copingForm}">
+		<input type="hidden" th:field="*{user_id}">
+		<input type="hidden" th:field="*{coping_id}">
+		<input type="hidden" th:field="*{created_at}">
+        <labal>タイトル: </labal>
+		<input type="text" name="title" th:value="${theCoping.title}" required maxlength="20"/>
+        <span th:errors="*{title}" class="error"></span>
+		<br>
+        <label style="vertical-align: top;">説明: </label>
+		<textarea name="description" rows="4" cols="25" maxlength="50">[[${theCoping.description}]]</textarea>
+        <span th:errors="*{description}" class="error"></span>
+		<br>
+        <label>カテゴリ:</label>
+		 <input type="text" name="category" th:value="${theCoping.category}" maxlength="10"/>
+        <span th:errors="*{category}" class="error"></span>
+		<br>
+		<label>実行回数 </label>
+		<input type="number" min="0" max="999" name="execution_count" th:value="${theCoping.execution_count}"/>
+		<br>
+		
+        <input type="submit" value="更新"></input>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ログイン</title>
+</head>
+<body>
+	<h2>ログイン画面</h2>
+	<!--エラー表示-->
+	<div th:if="${param.error}">
+		<p style="color: red;">usernameまたはpasswordが違います</p>
+	</div>
+	<!--ログアウト表示-->
+	<div th:if="${param.logout}">
+		<p style="color:blue;">ログアウトしました</p>
+	</div>
+	<!--新規ユーザー登録表示-->	
+	<p th:if="${message}" th:text="${message}" style="color:blue;">ユーザー登録完了メッセージ</p>
+		
+	<form th:action="@{/login}" method="post" th:object="${loginForm}">
+		
+		<div><!--ユーザー名-->
+			<label for="usernameInput">username</label>
+			<input type="text" th:field="*{usernameInput}" maxlength="50" pattern="^[a-zA-Z0-9]+$"/>
+		</div><!--パスワード-->
+		<div>
+			<label for="passwordInput" >password</label>
+			<input type="password" th:field="*{passwordInput}">
+		</div>
+		<div>
+			<input type="submit" value="login">
+		</div>
+	</form>
+	
+	<a th:href="@{/register}">新規ユーザー登録へ</a>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.example.demo.repository.CopingStrategyMapper">
+	<!-- <resultMap id="CopingStrategyWithUserResult" type="com.example.demo.entity.CopingStrategy"> 
+		<id property="coping_id" column="coping_id" /> <result property="title" column="title" 
+		/> <result property="description" column="description" /> <result property="category" 
+		column="category" /> <result property="execution_count" column="execution_count" 
+		/> <result property="created_at" column="created_at" /> <association property="user" 
+		javaType="com.example.demo.entity.User"> <id property="user_id" column="user_id" 
+		/> <result property="user_name" column="user_name" /> <result property="pass" 
+		column="pass" /> <result property="mail" column="mail" /> </association> 
+		</resultMap> -->
+	<!--<resultMap id="CopingStrategyWithExecutionRecord"
+		type="com.example.demo.entity.CopingStrategy">
+		<id property="coping_id" column="coping_id" />
+		<result property="title" column="title" />
+		<result property="description" column="description" />
+		<result property="category" column="category" />
+		<result property="execution_count" column="execution_count" />
+		<result property="created_at" column="created_at" />
+		<collection property="executionRecords"
+			ofType="com.example.demo.entity.ExecutionRecord">
+			<id property="execution_id" column="execution_id" />
+			<result property="coping_id" column="coping_id" />
+			<result property="execution_time" column="execution_time" />
+			<result property="count" column="count" />
+		</collection>
+	</resultMap>-->
+	<!-- <- 【SELECT】全てのコーピングを取得 - <select id="selectAll" resultMap="CopingStrategyWithUserResult"> 
+		SELECT * FROM coping_strategy c INNER JOIN users u ON c.user_id = u.user_id 
+		ORDER BY c.coping_id; </select> -->
+	<!-- 【SELECT】指定ユーザーの全てのコーピングを取得 -->
+	<select id="selectByUserId"
+		resultType="com.example.demo.entity.CopingStrategy">
+		SELECT
+		coping_id,user_id,title,description,category,execution_count,created_at,updated_at
+		FROM coping_strategy
+
+		WHERE user_id = #{userId}
+	</select>
+	
+	<!-- 【SELECT】指定コーピングIDのコーピングを1件取得 -->
+	<select id="selectByCopingId">
+	SELECT
+	coping_id,user_id,title,description,category,execution_count,created_at,updated_at
+	FROM coping_strategy
+	WHERE coping_id=#{copingId} AND user_id=#{userId}
+	</select>
+	<!-- 【INSERT】コーピングを追加 -->
+	<insert id="insertCoping"
+		parameterType="com.example.demo.entity.CopingStrategy">
+		INSERT INTO coping_strategy(user_id,title,description,category)
+		VALUES(#{user_id},#{title},#{description},#{category})
+	</insert>
+	
+	<!-- 【UPDATE】コーピングを編集 -->
+	<update id="updateCoping" parameterType="com.example.demo.entity.CopingStrategy">
+	UPDATE coping_strategy
+	SET title=#{title},description=#{description},category=#{category},execution_count=#{execution_count},
+	updated_at=CURRENT_TIMESTAMP
+	WHERE coping_id = #{coping_id}
+	</update>
+	
+	<!-- 【DELETE】コーピングを削除 -->
+	<delete id="deleteCoping">
+	DELETE FROM coping_strategy
+	WHERE coping_id =#{coping_id}
+	</delete>
+</mapper>

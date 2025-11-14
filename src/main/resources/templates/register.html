@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新規ユーザー登録</title>
+</head>
+<body>
+    <h2>新規ユーザー登録</h2>
+    <form th:action="@{/register}" th:object="${registerForm}" method="post">
+    	<div>
+            <label for="usernameInput">ユーザー名（半角英数字で3～10文字）:</label><br>
+            <input type="text" th:field="*{usernameInput}" required minlength="3" maxlength="10">
+            <span th:errors="*{usernameInput}" style="color:red;"></span>
+    	</div>
+        <div>
+            <label for="passwordInput">パスワード（英字、数字、記号!@;:を含めて8～20文字）:</label><br>
+            <input type="password" th:field="*{passwordInput}" required minlength="8" maxlength="20">
+            <span th:errors="*{passwordInput}" style="color:red;"></span>
+        </div>
+		<div>
+            <label for="confirmPasswordInput">パスワード（確認用）:</label><br>
+            <input type="password" th:field="*{confirmPasswordInput}" required minlength="8" maxlength="20">
+           	<span th:errors="*{confirmPasswordInput}" style="color:red;"></span>
+			<p th:if="${#fields.hasErrors('passwordMatch')}" th:errors="*{passwordMatch}" style="color:red;">
+				相関項目チェックのエラー
+			</p>
+		</div>
+        <div>
+            <button type="submit">登録</button>
+        </div>
+    </form>
+</body>
+</html>
